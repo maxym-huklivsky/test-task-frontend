@@ -1,0 +1,34 @@
+.drawer {
+  padding: 10px;
+  background-color: var(--bg-color);
+}
+
+.nameDrawer:hover {
+  cursor: pointer;
+}
+
+.link {
+  color: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.iconBox {
+  padding: 5px;
+  background-color: transparent;
+}
+
+.iconButton {
+  padding: 5px;
+}
+
+.iconButton:hover {
+  cursor: pointer;
+}
+
+.icon {
+  width: 25px;
+  height: 25px;
+}

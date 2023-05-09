@@ -1,0 +1,102 @@
+:root {
+  --text-color: #fef2e4;
+  --main-bg-color: #c9a66b;
+  --bg-color: #ba5536;
+  --bg-header-color: #46211a;
+  --bg-table-color: #693d3d;
+  --border-color: #a43820;
+  --transition: 0.2s ease-in-out;
+  --border-radius: 15px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--text-color);
+  background-color: var(--main-bg-color);
+  font-family: 'Roboto', sans-serif;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+.toast-message {
+  background-color: var(--border-color) !important;
+  color: var(--text-color) !important;
+  font-size: 20px;
+}
+
+.pagination {
+  justify-content: center;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  list-style: none;
+  margin-top: 36px;
+  font-size: 18px;
+}
+
+.page-link {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  min-width: 40px;
+  min-height: 40px;
+  text-decoration: none;
+  color: var(--border-color);
+  transition: background-color var(--transition) ease-in-out,
+    border-color var(--transition) ease-in-out;
+}
+
+a.page-link:hover {
+  background-color: var(--border-color);
+  color: var(--text-color);
+}
+
+a.page-link:hover span {
+  color: var(--text-color);
+}
+
+span {
+  color: var(--border-color);
+}
+
+.page-item.active .page-link {
+  color: var(--text-color);
+  background-color: var(--border-color);
+}
+
+.page-item.disabled .page-link {
+  background-color: #cccccc;
+}

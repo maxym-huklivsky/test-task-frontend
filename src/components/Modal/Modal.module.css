@@ -1,0 +1,78 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  overflow-y: scroll;
+
+  pointer-events: none;
+  opacity: 0;
+  background: rgba(0, 0, 0, 0.5);
+  transition: opacity var(--transition);
+}
+
+.backdrop.active {
+  opacity: 1;
+  pointer-events: visible;
+}
+
+.backdrop.active > .modal {
+  transform: scale(1);
+}
+
+.modal {
+  position: absolute;
+  padding: 90px 60px;
+  width: 100%;
+  transform: scale(0);
+  margin-top: 100px;
+
+  transition: transform var(--transition);
+  border-radius: calc(2 * var(--border-radius));
+  background-color: var(--bg-table-color);
+}
+
+@media screen and (min-width: 600px) {
+  .modal {
+    min-width: 600px;
+    width: auto;
+    display: inline-block;
+  }
+}
+
+.closeButton {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  right: 10px;
+  top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: transparent;
+  border: 4px var(--border-color) solid;
+  border-radius: 50%;
+  transition: background-color var(--transition);
+}
+
+.closeButton:hover,
+.closeButton:focus {
+  background-color: var(--border-color);
+}
+
+.closeButton:hover .closeIcon,
+.closeButton:focus .closeIcon {
+  fill: var(--bg-table-color);
+}
+
+.closeIcon {
+  width: 50px;
+  height: 50px;
+
+  fill: var(--text-color);
+  transition: fill var(--transition);
+}

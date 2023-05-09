@@ -1,0 +1,55 @@
+.root {
+  overflow: auto;
+}
+
+.table {
+  background-color: var(--bg-table-color);
+  border-collapse: collapse;
+  border-spacing: 10px;
+  max-width: 1000px;
+  border: 16px var(--bg-table-color) solid;
+  text-align: left;
+}
+
+.table td,
+.table th {
+  background-color: var(--bg-color);
+  border: 2px var(--bg-header-color) solid;
+}
+
+.table th,
+.table td:first-child {
+  background-color: var(--border-color);
+}
+
+.iconBox {
+  text-align: center;
+}
+
+.icon {
+  width: 35px;
+  height: 35px;
+}
+.title {
+  padding: 20px;
+}
+
+/* reset borders */
+
+.table th {
+  border-top: none;
+}
+
+.table > tbody > tr:last-child td {
+  border-bottom: none;
+}
+
+.table tr td:first-child,
+.table tr th:first-child {
+  border-left: none;
+}
+
+.table tr td:last-child,
+.table tr th:last-child {
+  border-right: none;
+}

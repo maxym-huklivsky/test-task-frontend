@@ -1,0 +1,21 @@
+.root {
+  overflow: auto;
+}
+
+.table {
+  text-align: center;
+  background-color: var(--bg-table-color);
+  border-collapse: separate;
+  border-spacing: 10px;
+  border-radius: var(--border-radius);
+  border: 16px var(--bg-table-color) solid;
+}
+
+.table td {
+  transition: background-color var(--transition);
+}
+
+.table th {
+  font-size: 22px;
+  padding: 20px;
+}

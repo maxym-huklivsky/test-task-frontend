@@ -1,0 +1,26 @@
+.description {
+  max-height: 60px;
+  overflow-y: auto;
+}
+
+.drowers {
+  min-width: 200px;
+  padding: 20px;
+}
+
+.iconBox {
+  padding: 10px 15px;
+}
+
+.iconButton {
+  padding: 5px;
+}
+
+.icon {
+  width: 25px;
+  height: 25px;
+}
+
+.textarea {
+  resize: none;
+}
