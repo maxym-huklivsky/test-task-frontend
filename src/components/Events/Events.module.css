@@ -1,5 +1,44 @@
 .wrap {
-  margin: 20px;
+  margin: 40px;
+}
+
+.customer {
+  padding: 20px;
+  display: inline-block;
+  background-color: var(--bg-header-color);
+  border-radius: var(--border-radius);
+}
+
+.contentWrap {
+  display: flex;
+  justify-content: center;
+
+  margin-bottom: 20px;
+}
+
+.customerTitle {
+  margin-bottom: 10px;
+
+  text-align: center;
+}
+
+.customerWrap {
+  display: flex;
+  justify-content: center;
+}
+
+.customerInfo {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+
+  border-radius: var(--border-radius);
+  background-color: var(--bg-color);
+}
+
+.customerInfo span {
+  color: var(--text-color);
 }
 
 .backButton {

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import './axios-default';
 
-const limit = 5;
+const limit = 3;
 
 export const createCustomer = async (data) => await axios.post('/api/customers', data);
 
