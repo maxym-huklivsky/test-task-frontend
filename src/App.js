@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -50,6 +50,7 @@ function App() {
       {!isRefreshing && (
         <Routes>
           <Route path="/" element={<Layout />}>
+            <Route path="/" element={<Navigate to="customers" />} />
             <Route
               path="customers"
               element={<PrivateRoute component={<CustomersPage />} redirect="/login" />}

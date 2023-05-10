@@ -1,5 +1,5 @@
 .button {
-  padding: 8px 12px;
+  padding: 4px 8px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -16,12 +16,42 @@
 }
 
 .button > span {
-  font-size: 20px;
+  font-size: 16px;
   color: white;
 }
 
 .button > svg {
-  width: 26px;
-  height: 26px;
+  width: 16px;
+  height: 16px;
   fill: var(--text-color);
+}
+
+@media screen and (min-width: 480px) {
+  .button {
+    padding: 6px 8px;
+  }
+
+  .button > svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .button > span {
+    font-size: 18px;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .button {
+    padding: 8px 12px;
+  }
+
+  .button > svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .button > span {
+    font-size: 20px;
+  }
 }

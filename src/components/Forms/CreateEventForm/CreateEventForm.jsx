@@ -1,22 +1,25 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-
 import { MdTitle, MdDescription } from 'react-icons/md';
+import { useParams } from 'react-router-dom';
+import { VscSaveAs } from 'react-icons/vsc';
+
 import Button from '../../Button/Button';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
-
-import css from '../Form.module.css';
 import owncss from './CreateEventForm.module.css';
-import { VscSaveAs } from 'react-icons/vsc';
 import { createEvent, getAllEvents } from '../../../business-logic/events';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectPage } from '../../../redux/events/selectors';
 import { setEvents } from '../../../redux/events/slice';
 import toastifyError from '../../../helpers/toastifyError';
-import { useParams } from 'react-router-dom';
+import { minLengthOfName } from '../../../consts/length';
+
+import css from '../Form.module.css';
+import Loader from '../../Loader';
 
 const CreateEventForm = ({ setActive }) => {
   const { customerId } = useParams();
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const page = useSelector(selectPage);
   const dispatch = useDispatch();
@@ -29,6 +32,8 @@ const CreateEventForm = ({ setActive }) => {
 
   const onSubmit = async (e) => {
     try {
+      setIsLoading(true);
+
       await createEvent({ customerId, data: e });
 
       const { data } = await getAllEvents({ customerId, page });
@@ -39,6 +44,8 @@ const CreateEventForm = ({ setActive }) => {
       reset();
     } catch (error) {
       toastifyError(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -50,9 +57,12 @@ const CreateEventForm = ({ setActive }) => {
           className={css.input}
           id="1"
           {...register('title', {
-            required: { value: true, message: 'Это поле обязательное' },
-            minLength: { value: 3, message: 'минимум 3 символа' },
-            maxLength: { value: 26, message: 'максимум 26 символов' },
+            required: { value: true, message: 'This field is required' },
+            minLength: { value: minLengthOfName, message: `Minimum ${minLengthOfName} characters` },
+            maxLength: {
+              value: 30,
+              message: `Maximum ${30} characters`,
+            },
           })}
         />
         <label className={css.label} htmlFor="1">
@@ -69,7 +79,7 @@ const CreateEventForm = ({ setActive }) => {
           className={`${css.input} ${owncss.textarea}`}
           id="2"
           {...register('description', {
-            required: { value: true, message: 'Это поле обязательное' },
+            required: { value: true, message: 'This field is required' },
           })}
         ></textarea>
         <label className={css.label} htmlFor="2">
@@ -89,7 +99,7 @@ const CreateEventForm = ({ setActive }) => {
           className={owncss.datetimeInput}
           id="3"
           {...register('startDate', {
-            required: { value: true, message: 'Это поле обязательное' },
+            required: { value: true, message: 'This field is required' },
           })}
         />
 
@@ -105,7 +115,7 @@ const CreateEventForm = ({ setActive }) => {
           className={owncss.datetimeInput}
           id="4"
           {...register('endDate', {
-            required: { value: true, message: 'Это поле обязательное' },
+            required: { value: true, message: 'This field is required' },
           })}
         />
 
@@ -113,7 +123,7 @@ const CreateEventForm = ({ setActive }) => {
       </div>
 
       <Button type="submit">
-        <span>Сохранить</span> <VscSaveAs />
+        <span>Save</span> {isLoading ? <Loader /> : <VscSaveAs />}
       </Button>
     </form>
   );

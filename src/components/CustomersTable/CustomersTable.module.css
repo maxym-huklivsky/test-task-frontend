@@ -16,6 +16,13 @@
 }
 
 .table th {
-  font-size: 22px;
-  padding: 20px;
+  font-size: 18px;
+  padding: 5px;
+}
+
+@media screen and (min-width: 800px) {
+  .table th {
+    font-size: 22px;
+    padding: 20px;
+  }
 }

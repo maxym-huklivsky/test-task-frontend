@@ -1,11 +1,25 @@
-.buttonWrap {
-  display: flex;
-  justify-content: center;
-  margin: 40px 0;
+.wrap {
+  margin: 20px;
 }
 
 .backButton {
   display: inline-block;
   margin-top: 30px;
   margin-left: 20px;
+}
+
+.buttonWrap {
+  margin-bottom: 10px;
+}
+
+@media screen and (min-width: 480px) {
+  .wrap {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .buttonWrap {
+    margin-bottom: 0;
+  }
 }

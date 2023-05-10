@@ -16,11 +16,13 @@ import PaginationForEvents from '../Pagination/PaginationForEvents';
 import EmptyMessage from '../EmptyMessage/EmptyMessage';
 
 import css from './Events.module.css';
+import Sort from '../Sort/Sort';
 
 const Events = () => {
   const { customerId } = useParams();
 
   const [activeModal, setActiveModal] = React.useState(false);
+  const [sortBy, setSortBy] = React.useState('title');
   const events = useSelector(selectEvents);
   const page = useSelector(selectPage);
   const dispatch = useDispatch();
@@ -28,7 +30,7 @@ const Events = () => {
   React.useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const { data } = await getAllEvents({ customerId, page });
+        const { data } = await getAllEvents({ customerId, page, sortBy });
 
         dispatch(setEvents(data));
       } catch (error) {
@@ -37,16 +39,20 @@ const Events = () => {
     };
 
     fetchEvents();
-  }, [customerId, dispatch, page]);
+  }, [customerId, dispatch, page, sortBy]);
 
   return (
     <>
       <div>
-        <div className={css.buttonWrap}>
-          <Button onClick={() => setActiveModal(true)}>
-            <span>Create Event</span>
-            <MdEventNote />
-          </Button>
+        <div className={css.wrap}>
+          <div className={css.buttonWrap}>
+            <Button onClick={() => setActiveModal(true)}>
+              <span>Create Event</span>
+              <MdEventNote />
+            </Button>
+          </div>
+
+          <Sort sort={sortBy} setSort={setSortBy} />
         </div>
 
         {events.length !== 0 ? (

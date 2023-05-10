@@ -15,9 +15,13 @@ import { selectPage } from '../../redux/customer/selectors';
 import { setCustomers } from '../../redux/customer/slice';
 
 import css from './Form.module.css';
+import { maxLengthOfName, minLengthOfName } from '../../consts/length';
+import Loader from '../Loader';
 
 const CreateCustomerForm = ({ setActive }) => {
   const page = useSelector(selectPage);
+  const [isLoading, setIsLoading] = React.useState(false);
+
   const dispatch = useDispatch();
   const {
     register,
@@ -28,6 +32,8 @@ const CreateCustomerForm = ({ setActive }) => {
 
   const onSubmit = async (e) => {
     try {
+      setIsLoading(true);
+
       await createCustomer(e);
 
       const result = await getAllCustomers(page);
@@ -39,6 +45,8 @@ const CreateCustomerForm = ({ setActive }) => {
       reset();
     } catch (error) {
       toastifyError(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -50,13 +58,16 @@ const CreateCustomerForm = ({ setActive }) => {
           className={css.input}
           id="1"
           {...register('name', {
-            required: { value: true, message: 'Это поле обязательное' },
-            minLength: { value: 3, message: 'минимум 3 символа' },
-            maxLength: { value: 16, message: 'максимум 16 символов' },
+            required: { value: true, message: 'This field is required' },
+            minLength: { value: minLengthOfName, message: `Minimum ${minLengthOfName} characters` },
+            maxLength: {
+              value: maxLengthOfName,
+              message: `Maximum ${maxLengthOfName} characters`,
+            },
           })}
         />
         <label className={css.label} htmlFor="1">
-          Имя
+          Name
         </label>
         {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
         <FaUserAlt className={css.inputIcon} />
@@ -68,13 +79,16 @@ const CreateCustomerForm = ({ setActive }) => {
           className={css.input}
           id="2"
           {...register('surname', {
-            required: { value: true, message: 'Это поле обязательное' },
-            minLength: { value: 3, message: 'минимум 3 символа' },
-            maxLength: { value: 16, message: 'максимум 16 символов' },
+            required: { value: true, message: 'This field is required' },
+            minLength: { value: minLengthOfName, message: `Minimum ${minLengthOfName} characters` },
+            maxLength: {
+              value: 15,
+              message: `Maximum ${15} characters`,
+            },
           })}
         />
         <label className={css.label} htmlFor="2">
-          Фамилия
+          Surname
         </label>
         {errors.surname && <ErrorMessage>{errors.surname.message}</ErrorMessage>}
         <FaUserAlt className={css.inputIcon} />
@@ -86,12 +100,12 @@ const CreateCustomerForm = ({ setActive }) => {
           className={css.input}
           id="3"
           {...register('email', {
-            required: { value: true, message: 'Это поле обязательное' },
-            pattern: { value: emailRegExp, message: 'Введите корректную почту' },
+            required: { value: true, message: 'This field is required' },
+            pattern: { value: emailRegExp, message: 'Input correct email addres' },
           })}
         />
         <label className={css.label} htmlFor="3">
-          Электронная почта
+          Email
         </label>
         {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
         <MdEmail className={css.inputIcon} />
@@ -103,19 +117,22 @@ const CreateCustomerForm = ({ setActive }) => {
           className={css.input}
           id="4"
           {...register('phone', {
-            required: { value: true, message: 'Это поле обязательное' },
-            pattern: { value: phoneRegExp, message: 'Введите корректный номер телефона' },
+            required: { value: true, message: 'This field is required' },
+            pattern: {
+              value: phoneRegExp,
+              message: 'Input correct phone number. Example: 1234567890',
+            },
           })}
         />
         <label className={css.label} htmlFor="4">
-          Номер телефона
+          Phone
         </label>
         {errors.phone && <ErrorMessage>{errors.phone.message}</ErrorMessage>}
         <AiFillPhone className={css.inputIcon} />
       </div>
 
       <Button type="submit">
-        <span>Сохранить</span> <VscSaveAs />
+        <span>Save</span> {isLoading ? <Loader /> : <VscSaveAs />}
       </Button>
     </form>
   );

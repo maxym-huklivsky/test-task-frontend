@@ -4,6 +4,7 @@ import { MdEmail } from 'react-icons/md';
 import { Si1Password } from 'react-icons/si';
 import { SlLogin } from 'react-icons/sl';
 import { useDispatch } from 'react-redux';
+import { HiCursorClick } from 'react-icons/hi';
 
 import { emailRegExp } from '../../consts/regexps';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
@@ -15,9 +16,12 @@ import toastifyError from '../../helpers/toastifyError';
 import { setAuthHeader } from '../../helpers/setHeaders';
 
 import css from './Form.module.css';
+import { Link } from 'react-router-dom';
+import Loader from '../Loader';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const {
     register,
@@ -28,6 +32,8 @@ const LoginForm = () => {
 
   const onSubmit = async (e) => {
     try {
+      setIsLoading(true);
+
       const { data } = await authLogin(e);
 
       dispatch(setAuthInfo(data));
@@ -36,6 +42,8 @@ const LoginForm = () => {
       reset();
     } catch (error) {
       toastifyError(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -85,8 +93,20 @@ const LoginForm = () => {
       </div>
 
       <Button type="submit">
-        <span>Sign in</span> <SlLogin />
+        <span>Sign in</span> {isLoading ? <Loader /> : <SlLogin />}
       </Button>
+
+      <div className={css.haveAccountBlock}>
+        <span>Don't have account?</span>
+
+        <div className={css.createAccWrap}>
+          <div className={css.createAcc}>
+            <Link className={css.createAccLink} to="/register">
+              Create account <HiCursorClick />
+            </Link>
+          </div>
+        </div>
+      </div>
     </form>
   );
 };

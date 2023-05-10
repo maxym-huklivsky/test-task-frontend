@@ -8,11 +8,13 @@ import { deleteEvent, getAllEvents } from '../../business-logic/events';
 import toastifyError from '../../helpers/toastifyError';
 import { selectPage } from '../../redux/events/selectors';
 import { setEvents } from '../../redux/events/slice';
+import Loader from '../Loader';
 
 import css from './EventRow.module.css';
 
 const EventRow = ({ title, description, startDate, endDate, _id }) => {
   const { customerId } = useParams();
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const page = useSelector(selectPage);
   const dispatch = useDispatch();
@@ -29,11 +31,15 @@ const EventRow = ({ title, description, startDate, endDate, _id }) => {
 
   const onDelete = async () => {
     try {
+      setIsLoading(true);
+
       await deleteEvent({ customerId, id: _id });
 
       await fetchCustomers();
     } catch (error) {
       toastifyError(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -47,7 +53,7 @@ const EventRow = ({ title, description, startDate, endDate, _id }) => {
       <td className={css.drowers}>{formatEndDate}</td>
       <td className={css.iconBox}>
         <button onClick={onDelete} className={css.iconButton}>
-          <MdDelete className={css.icon} />
+          {isLoading ? <Loader /> : <MdDelete className={css.icon} />}
         </button>
       </td>
     </tr>

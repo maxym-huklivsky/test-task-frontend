@@ -4,7 +4,7 @@ import { FaUserAlt } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import { Si1Password } from 'react-icons/si';
 import { GiArchiveRegister } from 'react-icons/gi';
-
+import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import Button from '../Button/Button';
@@ -20,11 +20,13 @@ import { authRegister } from '../../business-logic/auth';
 import toastifyError from '../../helpers/toastifyError';
 import { setAuthInfo } from '../../redux/auth/slice';
 import { setAuthHeader } from '../../helpers/setHeaders';
+import Loader from '../Loader';
 
 import css from './Form.module.css';
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const {
     register,
@@ -35,6 +37,8 @@ const RegisterForm = () => {
 
   const onSubmit = async (e) => {
     try {
+      setIsLoading(true);
+
       const { data } = await authRegister(e);
 
       dispatch(setAuthInfo(data));
@@ -43,6 +47,8 @@ const RegisterForm = () => {
       reset();
     } catch (error) {
       toastifyError(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -116,8 +122,20 @@ const RegisterForm = () => {
       </div>
 
       <Button type="submit">
-        <span>Sign up</span> <GiArchiveRegister />
+        <span>Sign up</span> {isLoading ? <Loader /> : <GiArchiveRegister />}
       </Button>
+
+      <div className={css.haveAccountBlock}>
+        <span>Have account?</span>
+
+        <div className={css.createAccWrap}>
+          <div className={css.createAcc}>
+            <Link className={css.createAccLink} to="/login">
+              Login
+            </Link>
+          </div>
+        </div>
+      </div>
     </form>
   );
 };

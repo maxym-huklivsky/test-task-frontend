@@ -25,10 +25,10 @@
 
 .modal {
   position: absolute;
-  padding: 90px 60px;
+  padding: 50px 25px;
+  margin-top: 50px;
   width: 100%;
   transform: scale(0);
-  margin-top: 100px;
 
   transition: transform var(--transition);
   border-radius: calc(2 * var(--border-radius));
@@ -40,6 +40,13 @@
     min-width: 600px;
     width: auto;
     display: inline-block;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .modal {
+    padding: 90px 60px;
+    margin-top: 100px;
   }
 }
 

@@ -19,7 +19,7 @@
 .input:focus + label,
 .input:not(:placeholder-shown) + label {
   transform: translate(-50px, -100%);
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .label {
@@ -27,7 +27,7 @@
   top: 0;
   left: 50px;
 
-  font-size: 22px;
+  font-size: 18px;
   transform: translateY(35%);
   transition: transform var(--transition), font-size var(--transition);
 }
@@ -40,4 +40,56 @@
 
   width: 22px;
   height: 22px;
+}
+
+.haveAccountBlock {
+  padding: 10px;
+  margin-top: 10px;
+
+  background-color: var(--border-color);
+  border-radius: var(--border-radius);
+}
+
+.haveAccountBlock span {
+  display: block;
+  margin-bottom: 20px;
+  font-size: 18px;
+  color: var(--text-color);
+}
+
+.createAcc {
+  display: inline-block;
+
+  border-radius: var(--border-radius);
+  border: 3px solid var(--bg-header-color);
+  color: var(--text-color);
+  background-color: var(--bg-header-color);
+  transition: background-color var(--transition);
+}
+
+.createAcc:hover,
+.createAcc:focus {
+  background-color: var(--bg-table-color);
+}
+
+.createAccLink {
+  color: var(--text-color);
+  display: block;
+  padding: 15px;
+}
+
+@media screen and (min-width: 800px) {
+  .label {
+    font-size: 22px;
+  }
+
+  .input:focus + label,
+  .input:not(:placeholder-shown) + label {
+    font-size: 18px;
+  }
+
+  .haveAccountBlock {
+    padding: 20px;
+    margin-top: 20px;
+  }
 }

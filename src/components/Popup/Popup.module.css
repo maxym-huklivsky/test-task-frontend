@@ -1,0 +1,32 @@
+.popup {
+  display: inline-block;
+  position: absolute;
+  top: 110%;
+  left: 0;
+
+  border-radius: var(--border-radius);
+  background-color: var(--bg-header-color);
+  border: 8px solid var(--bg-header-color);
+}
+
+.sortItem {
+  padding: 15px;
+  font-size: 18px;
+  transition: background-color var(--transition);
+}
+
+.sortItem:first-of-type {
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+}
+
+.sortItem:last-of-type {
+  border-bottom-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+}
+
+.sortItem:hover,
+.sortItem:focus {
+  background-color: var(--main-bg-color);
+  cursor: pointer;
+}

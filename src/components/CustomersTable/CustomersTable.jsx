@@ -13,6 +13,7 @@ const CustomersTable = ({ centering, customers }) => {
             <th>Email</th>
             <th>Phone Number</th>
             <th>Events Count</th>
+            <th>Next Event Date</th>
           </tr>
         </thead>
         <tbody>

@@ -38,13 +38,15 @@ const Layout = () => {
           </Button>
         )}
         <h1 className={css.title}>
-          Events Application <BiCalendarEvent />
+          Events&nbsp;Application <BiCalendarEvent />
         </h1>
         {isLoggedIn && (
           <div className={css.authRoot}>
             <div className={css.authInfo}>
               <span>Name: {name}</span>
-              <span>Email: {email}</span>
+              <span title={email}>
+                Email: {email.length > 10 ? `${email.slice(0, 10)}...` : email}
+              </span>
             </div>
             <RxAvatar className={css.authIcon} />
           </div>

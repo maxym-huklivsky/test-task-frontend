@@ -5,20 +5,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { BsSave } from 'react-icons/bs';
 import { GiClick } from 'react-icons/gi';
+import { format } from 'date-fns';
 
 import { deleteCustomer, getAllCustomers, updateCustomer } from '../../business-logic/customers';
 import toastifyError from '../../helpers/toastifyError';
 import { selectPage } from '../../redux/customer/selectors';
 import { setCustomers } from '../../redux/customer/slice';
+import Loader from '../Loader';
 
 import css from './CustomerRow.module.css';
 
-const CustomerRow = ({ name, surname, email, phone, eventsCount, _id }) => {
+const CustomerRow = ({ name, surname, email, phone, eventsCount, nextEventDate, _id }) => {
   const [updateRegime, setUpdateRegime] = React.useState(false);
   const [nameValue, setNameValue] = React.useState(name);
   const [surnameValue, setSurNameValue] = React.useState(surname);
   const [phoneValue, setPhoneValue] = React.useState(phone);
   const [emailValue, setEmailValue] = React.useState(email);
+  const [isDeleteLoading, setIsDeleteLoading] = React.useState(false);
+  const [isUpdateLoading, setIsUpdateLoading] = React.useState(false);
+
+  const formatNextEventDate =
+    nextEventDate !== 'no date'
+      ? format(new Date(nextEventDate), 'dd MMMM yyyy, HH:mm')
+      : 'no date';
 
   const page = useSelector(selectPage);
   const dispatch = useDispatch();
@@ -32,11 +41,15 @@ const CustomerRow = ({ name, surname, email, phone, eventsCount, _id }) => {
 
   const onDelete = async () => {
     try {
+      setIsDeleteLoading(true);
+
       await deleteCustomer(_id);
 
       await fetchCustomers();
     } catch (error) {
       toastifyError(error);
+    } finally {
+      setIsDeleteLoading(false);
     }
   };
 
@@ -46,6 +59,8 @@ const CustomerRow = ({ name, surname, email, phone, eventsCount, _id }) => {
 
   const onSave = async () => {
     try {
+      setIsUpdateLoading(true);
+
       const data = {
         name: nameValue.trim(),
         surname: surnameValue.trim(),
@@ -63,12 +78,14 @@ const CustomerRow = ({ name, surname, email, phone, eventsCount, _id }) => {
       setUpdateRegime(false);
     } catch (error) {
       toastifyError(error);
+    } finally {
+      setIsUpdateLoading(false);
     }
   };
 
   return (
     <tr>
-      <td className={`${css.drawer} ${css.nameDrawer}`}>
+      <td className={css.nameDrawer}>
         {updateRegime ? (
           <>
             <input
@@ -111,13 +128,14 @@ const CustomerRow = ({ name, surname, email, phone, eventsCount, _id }) => {
         )}
       </td>
       <td className={css.drawer}>{eventsCount}</td>
+      <td className={css.drawer}>{formatNextEventDate}</td>
       <td className={css.iconBox}>
         {nameValue !== name ||
         surnameValue !== surname ||
         phoneValue !== phone ||
         emailValue !== email ? (
           <button className={css.iconButton} onClick={onSave}>
-            <BsSave className={css.icon} />
+            {isUpdateLoading ? <Loader /> : <BsSave className={css.icon} />}
           </button>
         ) : (
           <button className={css.iconButton} onClick={onUpdate}>
@@ -127,7 +145,7 @@ const CustomerRow = ({ name, surname, email, phone, eventsCount, _id }) => {
       </td>
       <td className={css.iconBox}>
         <button className={css.iconButton} onClick={onDelete}>
-          <MdDelete className={css.icon} />
+          {isDeleteLoading ? <Loader /> : <MdDelete className={css.icon} />}
         </button>
       </td>
     </tr>
